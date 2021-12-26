@@ -43,8 +43,8 @@ client.on("messageCreate", async (message) => {
 });
 
 client.on("guildMemberAdd", async (member) => {
-    let guild = client.guilds.cache.get("711349793418641498")
-    let channel = client.channels.cache.get("711349793418641501");
+    let guild = client.guilds.cache.get("888959672055373884")
+    let channel = client.channels.cache.get("888959772261490729");
     let font = await jimp.loadFont(jimp.FONT_SANS_32_BLACK);
     let mask = await jimp.read("welcome_images/mascara.png");
     let background = await jimp.read("welcome_images/fundo.png");
