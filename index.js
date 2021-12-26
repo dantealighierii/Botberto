@@ -46,9 +46,9 @@ client.on("guildMemberAdd", async (member) => {
     let guild = client.guilds.cache.get("711349793418641498")
     let channel = client.channels.cache.get("711349793418641501");
     let font = await jimp.loadFont(jimp.FONT_SANS_32_BLACK);
-    let mask = await jimp.read("mascara.png");
-    let background = await jimp.read("fundo.png");
-    let theAvatar = "/welcome_images/teste.png";
+    let mask = await jimp.read("welcome_images/mascara.png");
+    let background = await jimp.read("welcome_images/fundo.png");
+    let theAvatar = "welcome_images/teste.png";
 
     if (guild != member.guild) {
         return console.log("Not a server member");
