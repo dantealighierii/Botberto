@@ -1,11 +1,11 @@
 require("dotenv").config();
 const token = process.env.TOKEN;
-const { Client, Intents } = require("discord.js");
+const { Client, Intents, MessageEmbed } = require("discord.js");
 const client = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
+  MessageEmbed
 });
 const { prefix } = require("./config.json");
-const jimp = require("jimp");
 
 client.on("ready", () => {
   console.log(
@@ -26,6 +26,31 @@ client.on("guildDelete", (guild) => {
   client.user.setActivity(`I\`m serving ${client.guilds.cache.size} servers`);
 });
 
+client.on("guildMemberAdd", async (member) => {
+    let guild = client.guilds.cache.get("711349793418641498");
+    let channel = client.channels.cache.get("711349793418641501");
+    let emoji = member.guild.emojis.cache.find(emoji => emoji.name === 'Hmm');
+
+    if (guild != member.guild) {
+      return console.log("Not a server member");
+    } else {
+      let embed = new client.MessageEmbed()
+        .setColor('#ffcbdb')
+        .setAuthor(member.user.tag, member.user.displayAvatarURL())
+        .setTitle(`${emoji} Welcome ${emoji}`)
+        .setImage(
+          'https://cdn.discordapp.com/attachments/722471025073455124/924440358237130793/download20211206201540.png'
+        )
+        .setDescription(`${member.user}, welcome to ${guild.name}! Today we have ${member.guild.memberCount} members.`)
+        .addField(`Channels`, ``)
+        .setThumbnail(member.user.displayAvatarURL({ dynamic: true, format: "png", size: 1024 }))
+        .setFooter('User ID: ' + member.user.id)
+        .setTimestamp();
+
+      await channel.send(embed);
+    };
+  });
+
 client.on("messageCreate", async (message) => {
   if (message.author.bot) return;
   if (message.channel.type === "DM") return;
@@ -40,34 +65,6 @@ client.on("messageCreate", async (message) => {
       `Pong! Your ping is ${m.createdTimestamp - message.createdTimestamp}ms.`
     );
   }
-});
-
-client.on("guildMemberAdd", async (member) => {
-    let guild = client.guilds.cache.get("888959672055373884")
-    let channel = client.channels.cache.get("888959772261490729");
-    let font = await jimp.loadFont(jimp.FONT_SANS_32_BLACK);
-    let mask = await jimp.read("welcome_images/mascara.png");
-    let background = await jimp.read("welcome_images/fundo.png");
-    let theAvatar = "welcome_images/teste.png";
-
-    if (guild != member.guild) {
-        return console.log("Not a server member");
-    } else {
-        jimp.read(member.user.displayAvatarURL).then((avatar) => {
-            avatar.resize(130, 130);
-            mask.resize(130, 130);
-            avatar.mask(mask);
-
-            background.print(font, 170, 175, member.user.username);
-            background.composite(avatar, 40, 90).write(theAvatar);
-            channel.send(``, { files: [theAvatar] });
-
-            console.log("Imagem enviada para o Discord");
-        })
-        .catch((err) => {
-            console.log("error avatar");
-        });
-    };
 });
 
 client.login(token);
