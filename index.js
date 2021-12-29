@@ -1,6 +1,6 @@
 require("dotenv").config();
 const token = process.env.TOKEN;
-const { Client, Intents, MessageEmbed } = require("discord.js");
+const { Client, Intents, MessageEmbed, Message } = require("discord.js");
 const client = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS],
   MessageEmbed
@@ -38,9 +38,9 @@ client.on("guildMemberAdd", async (member) => {
   } else {
     console.log("entrou");
 
-    let embed = new MessageEmbed()
+   let embed = new MessageEmbed()
       .setColor("#ffcbdb")
-      .setAuthor(member.user.displayAvatarURL())
+      .setAuthor(member.user.tag)
       .setTitle(`${emoji} Welcome ${emoji}`)
       .setImage(
         "https://cdn.discordapp.com/attachments/722471025073455124/924440358237130793/download20211206201540.png"
@@ -48,6 +48,7 @@ client.on("guildMemberAdd", async (member) => {
       .setDescription(
         `${member.user}, welcome to ${guild.name}! Today we have ${member.guild.memberCount} members.`
       )
+	  //
       .setThumbnail(
         member.user.displayAvatarURL({
           dynamic: true,
@@ -58,7 +59,7 @@ client.on("guildMemberAdd", async (member) => {
       .setFooter("User ID: " + member.user.id)
       .setTimestamp();
 
-    await channel.send('Hello, World!');
+    await channel.send({ embeds: [embed] });
   }
 });
 
