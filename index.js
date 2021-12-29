@@ -2,8 +2,8 @@ require("dotenv").config();
 const token = process.env.TOKEN;
 const { Client, Intents, MessageEmbed } = require("discord.js");
 const client = new Client({
-  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
-  MessageEmbed,
+  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS],
+  MessageEmbed
 });
 const { prefix } = require("./config.json");
 
@@ -31,13 +31,16 @@ client.on("guildMemberAdd", async (member) => {
   let channel = client.channels.cache.get("711349793418641501");
   let emoji = member.guild.emojis.cache.find((emoji) => emoji.name === "Hmm");
 
+  console.log("sim");
+
   if (guild != member.guild) {
     return console.log("Not a server member");
   } else {
     console.log("entrou");
-    let embed = new client.MessageEmbed()
+
+    let embed = new MessageEmbed()
       .setColor("#ffcbdb")
-      .setAuthor(member.user.tag, member.user.displayAvatarURL())
+      .setAuthor(member.user.displayAvatarURL())
       .setTitle(`${emoji} Welcome ${emoji}`)
       .setImage(
         "https://cdn.discordapp.com/attachments/722471025073455124/924440358237130793/download20211206201540.png"
@@ -55,7 +58,7 @@ client.on("guildMemberAdd", async (member) => {
       .setFooter("User ID: " + member.user.id)
       .setTimestamp();
 
-    await channel.send(embed);
+    await channel.send('Hello, World!');
   }
 });
 
