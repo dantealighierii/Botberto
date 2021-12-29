@@ -3,7 +3,7 @@ const token = process.env.TOKEN;
 const { Client, Intents, MessageEmbed } = require("discord.js");
 const client = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
-  MessageEmbed
+  MessageEmbed,
 });
 const { prefix } = require("./config.json");
 
@@ -27,29 +27,37 @@ client.on("guildDelete", (guild) => {
 });
 
 client.on("guildMemberAdd", async (member) => {
-    let guild = client.guilds.cache.get("711349793418641498");
-    let channel = client.channels.cache.get("711349793418641501");
-    let emoji = member.guild.emojis.cache.find(emoji => emoji.name === 'Hmm');
+  let guild = client.guilds.cache.get("711349793418641498");
+  let channel = client.channels.cache.get("711349793418641501");
+  let emoji = member.guild.emojis.cache.find((emoji) => emoji.name === "Hmm");
 
-    if (guild != member.guild) {
-      return console.log("Not a server member");
-    } else {
-      console.log("entrou");
-      let embed = new client.MessageEmbed()
-        .setColor('#ffcbdb')
-        .setAuthor(member.user.tag, member.user.displayAvatarURL())
-        .setTitle(`${emoji} Welcome ${emoji}`)
-        .setImage(
-          'https://cdn.discordapp.com/attachments/722471025073455124/924440358237130793/download20211206201540.png'
-        )
-        .setDescription(`${member.user}, welcome to ${guild.name}! Today we have ${member.guild.memberCount} members.`)
-        .setThumbnail(member.user.displayAvatarURL({ dynamic: true, format: "png", size: 1024 }))
-        .setFooter('User ID: ' + member.user.id)
-        .setTimestamp();
+  if (guild != member.guild) {
+    return console.log("Not a server member");
+  } else {
+    console.log("entrou");
+    let embed = new client.MessageEmbed()
+      .setColor("#ffcbdb")
+      .setAuthor(member.user.tag, member.user.displayAvatarURL())
+      .setTitle(`${emoji} Welcome ${emoji}`)
+      .setImage(
+        "https://cdn.discordapp.com/attachments/722471025073455124/924440358237130793/download20211206201540.png"
+      )
+      .setDescription(
+        `${member.user}, welcome to ${guild.name}! Today we have ${member.guild.memberCount} members.`
+      )
+      .setThumbnail(
+        member.user.displayAvatarURL({
+          dynamic: true,
+          format: "png",
+          size: 1024,
+        })
+      )
+      .setFooter("User ID: " + member.user.id)
+      .setTimestamp();
 
-      await channel.send(embed);
-    };
-  });
+    await channel.send(embed);
+  }
+});
 
 client.on("messageCreate", async (message) => {
   if (message.author.bot) return;
