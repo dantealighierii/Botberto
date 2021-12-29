@@ -34,6 +34,7 @@ client.on("guildMemberAdd", async (member) => {
     if (guild != member.guild) {
       return console.log("Not a server member");
     } else {
+      console.log("entrou");
       let embed = new client.MessageEmbed()
         .setColor('#ffcbdb')
         .setAuthor(member.user.tag, member.user.displayAvatarURL())
@@ -42,7 +43,6 @@ client.on("guildMemberAdd", async (member) => {
           'https://cdn.discordapp.com/attachments/722471025073455124/924440358237130793/download20211206201540.png'
         )
         .setDescription(`${member.user}, welcome to ${guild.name}! Today we have ${member.guild.memberCount} members.`)
-        .addField(`Channels`, ``)
         .setThumbnail(member.user.displayAvatarURL({ dynamic: true, format: "png", size: 1024 }))
         .setFooter('User ID: ' + member.user.id)
         .setTimestamp();
