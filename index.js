@@ -4,14 +4,14 @@ require('./deploy-commands.js');
 const fs = require('node:fs');
 const path = require('node:path');
 const token = process.env.token;
-const { Client, Intents, Collection } = require('discord.js');
+const { Client, Collection, GatewayIntentBits } = require('discord.js');
 
 // console.log(process.env.token);
 
 // New class instance
 const client = new Client({
     intents: [
-        Intents.FLAGS.GUILDS
+        GatewayIntentBits.Guilds
     ]
 });
 
@@ -32,7 +32,7 @@ client.once('ready', () => {
 });
 
 client.on('interactionCreate', async interaction => {
-    if (!interaction.isCommand()) return;
+    if (!interaction.isChatInputCommand()) return;
 
     const command = client.commands.get(interaction.commandName);
 
